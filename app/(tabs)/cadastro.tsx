@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -12,6 +12,25 @@ export default function CadastroScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [vehicle, setVehicle] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [formError, setFormError] = useState('');
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  function handleRegister() {
+    if (!email || !isEmailValid) {
+      setEmailError('Digite um e-mail válido.');
+      return;
+    }
+
+    if (!password || !vehicle) {
+      setFormError('Preencha todos os campos.');
+      return;
+    }
+
+    setEmailError('');
+    setFormError('');
+    router.push('/boas-vindas');
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -35,6 +54,7 @@ export default function CadastroScreen() {
               keyboardType="email-address"
               label="E-mail"
               onChangeText={setEmail}
+              error={emailError || (email && !isEmailValid ? 'Digite um e-mail válido.' : undefined)}
               placeholder="Placeholder"
               value={email}
             />
@@ -53,7 +73,12 @@ export default function CadastroScreen() {
             />
           </View>
           <View style={styles.actions}>
-            <Button label="Se cadastrar" />
+            <Button
+              disabled={!isEmailValid || !password || !vehicle}
+              label="Se cadastrar"
+              onPress={handleRegister}
+            />
+            {formError ? <Text style={styles.formError}>{formError}</Text> : null}
             <Pressable onPress={() => router.push('/login')} style={styles.loginButton}>
               <Text style={styles.loginLink}>Já tem uma conta? Entre aqui</Text>
             </Pressable>
@@ -81,6 +106,12 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
     maxWidth: 340,
     width: '100%',
+  },
+  formError: {
+    color: '#ff9f9f',
+    fontFamily: FluiFonts.inter.regular,
+    fontSize: 12,
+    textAlign: 'center',
   },
   heading: {
     alignItems: 'center',

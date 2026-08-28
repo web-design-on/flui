@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
 
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
@@ -11,6 +11,25 @@ import { FluiColors, FluiFonts, Spacing } from '@/constants/theme';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [formError, setFormError] = useState('');
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  function handleLogin() {
+    if (!email || !isEmailValid) {
+      setEmailError('Digite um e-mail válido.');
+      return;
+    }
+
+    if (!password) {
+      setFormError('Preencha todos os campos.');
+      return;
+    }
+
+    setEmailError('');
+    setFormError('');
+    router.push('/boas-vindas');
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -34,6 +53,7 @@ export default function LoginScreen() {
               keyboardType="email-address"
               label="E-mail"
               onChangeText={setEmail}
+              error={emailError || (email && !isEmailValid ? 'Digite um e-mail válido.' : undefined)}
               placeholder="Placeholder"
               value={email}
             />
@@ -49,7 +69,12 @@ export default function LoginScreen() {
             </Pressable>
           </View>
           <View style={styles.actions}>
-            <Button label="Entrar" />
+            <Button
+              disabled={!isEmailValid || !password}
+              label="Entrar"
+              onPress={handleLogin}
+            />
+            {formError ? <Text style={styles.formError}>{formError}</Text> : null}
             <Pressable onPress={() => router.push('/cadastro')} style={styles.registerButton}>
               <Text style={styles.registerLink}>Novo aqui? Se cadastre</Text>
             </Pressable>
@@ -86,6 +111,12 @@ const styles = StyleSheet.create({
     color: FluiColors.mutedText,
     fontFamily: FluiFonts.inter.regular,
     fontSize: 11,
+  },
+  formError: {
+    color: '#ff9f9f',
+    fontFamily: FluiFonts.inter.regular,
+    fontSize: 12,
+    textAlign: 'center',
   },
   heading: {
     alignItems: 'center',
