@@ -8,6 +8,53 @@ import { Platform } from 'react-native';
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 
+export const BrandColors = {
+  background: '#302f2e',
+  text: '#ffffff',
+  mutedText: '#b9b7b7',
+  border: '#dedede',
+  inputText: '#505050',
+  primary: '#b747f8',
+  primaryDark: '#511288',
+};
+
+export const FluiColors = {
+  background: '#302f2e',
+  text: '#ffffff',
+  mutedText: '#b9b7b7',
+  inputBackground: '#ffffff',
+  inputText: '#505050',
+  border: '#dedede',
+  primary: '#b747f8',
+  primaryDark: '#511288',
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+};
+
+export const BorderRadius = {
+  input: 4,
+  button: 24,
+};
+
+export const FluiFonts = {
+  josefin: {
+    regular: 'JosefinSans_400Regular',
+    bold: 'JosefinSans_700Bold',
+  },
+  inter: {
+    regular: 'Inter_400Regular',
+    medium: 'Inter_500Medium',
+    semiBold: 'Inter_600SemiBold',
+    bold: 'Inter_700Bold',
+  },
+};
+
 export const Colors = {
   light: {
     text: '#11181C',
