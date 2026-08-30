@@ -1,7 +1,8 @@
 import { ThemedText } from "@/components/themed-text";
-import { useFocusEffect } from "expo-router";
+import { FluiColors } from "@/constants/theme";
+import { router, useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { TextInput, View } from "react-native";
+import { Keyboard, Pressable, Text, TextInput, View } from "react-native";
 
 export default function SearchScreen() {
   const [showResults, setShowResults] = useState(false);
@@ -15,29 +16,55 @@ export default function SearchScreen() {
     setShowResults(true);
   }
 
+  function handleCancelSearch() {
+    setShowResults(false);
+    setSearchInput("");
+    Keyboard.dismiss();
+  }
+
   useFocusEffect(
     useCallback(() => {
       setShowResults(false);
+      setSearchInput("");
     }, []),
   );
 
   return (
     <View style={styles.container}>
-      <TextInput
-        placeholder="Pesquise aqui..."
-        style={styles.searchInput}
-        placeholderTextColor="#FFFFFF"
-        onSubmitEditing={handleSearch}
-        value={searchInput}
-        onChangeText={setSearchInput}
-      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 16,
+        }}
+      >
+        <TextInput
+          placeholder="Pesquise aqui..."
+          style={styles.searchInput}
+          placeholderTextColor="#FFFFFF"
+          onSubmitEditing={handleSearch}
+          value={searchInput}
+          onChangeText={setSearchInput}
+        />
+
+        <Pressable onPress={handleCancelSearch}>
+          <ThemedText style={styles.cancelText}>Cancelar</ThemedText>
+        </Pressable>
+      </View>
 
       {showResults && (
-        <View style={styles.searchResults}>
+        <Pressable
+          style={styles.searchResults}
+          onPress={() => router.replace("/ponto-recarga")}
+        >
           <View style={styles.searchResultItem} id="searchResults">
-            <ThemedText>Flui(ndo)</ThemedText>
+            <View style={styles.itemTitleContainer}>
+              <ThemedText>Flui(ndo)</ThemedText>
+              <Text style={styles.sponsoredText}>Patrocinado</Text>
+            </View>
           </View>
-        </View>
+        </Pressable>
       )}
     </View>
   );
@@ -54,18 +81,16 @@ const styles = {
     borderRadius: 32,
     color: "#fff",
     fontSize: 16,
-    paddingHorizontal: 24,
+    paddingHorizontal: 17,
     paddingVertical: 8,
+    flex: 1,
   },
   searchResults: {
-    //marginHorizontal: 16,
     backgroundColor: "#505050",
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     padding: 16,
     marginTop: 200,
-    //position: "absolute",
-    //bottom: 0,
     width: "100%",
     flex: 1,
   },
@@ -73,5 +98,23 @@ const styles = {
     backgroundColor: "#333130",
     borderRadius: 8,
     padding: 8,
+  },
+  itemTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 16,
+  },
+  sponsoredText: {
+    fontSize: 10,
+    color: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: FluiColors.primary,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 32,
+  },
+  cancelText: {
+    fontSize: 12,
   },
 };

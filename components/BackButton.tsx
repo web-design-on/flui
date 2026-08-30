@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     height: 36,
     justifyContent: "center",
-    // left: Spacing.md,
-    // position: 'absolute',
+    left: Spacing.md,
+    position: "absolute",
     width: 36,
   },
 });
