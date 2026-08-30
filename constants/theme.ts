@@ -27,6 +27,9 @@ export const FluiColors = {
   border: '#dedede',
   primary: '#b747f8',
   primaryDark: '#511288',
+  card: '#3a3837',
+  placeholder: '#d9d9d9',
+  success: '#3ddc84',
 };
 
 export const Spacing = {
