@@ -1,33 +1,65 @@
-import { Tabs } from 'expo-router';
+import { useThemeColor } from "@/hooks/use-theme-color";
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import { ComponentProps } from "react";
+import { Platform, View } from "react-native";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+function TabIcon({
+  name,
+  color,
+  focused,
+}: {
+  name: ComponentProps<typeof Ionicons>["name"];
+  color: string;
+  focused: boolean;
+}) {
+  return (
+    <View>
+      <Ionicons name={name} size={26} color={color} />
+      {focused && <View />}
+    </View>
+  );
+}
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const activeColor = useThemeColor({}, "text");
+  const inactiveColor = useThemeColor({}, "tint");
+  const bgColor = useThemeColor({}, "background");
+  const borderColor = "#E5E5E5";
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarStyle: { display: 'none' },
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: activeColor,
+        tabBarInactiveTintColor: inactiveColor,
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        tabBarStyle: {
+          backgroundColor: bgColor,
+          borderTopWidth: 1,
+          borderTopColor: borderColor,
+          height: Platform.OS === "ios" ? 88 : 95,
+          paddingBottom: 25,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ focused }) => (
+            <TabIcon
+              name={focused ? "home" : "home-outline"}
+              color={focused ? activeColor : inactiveColor}
+              focused={focused}
+            />
+          ),
         }}
       />
     </Tabs>
