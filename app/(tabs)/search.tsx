@@ -54,17 +54,17 @@ export default function SearchScreen() {
       </View>
 
       {showResults && (
-        <Pressable
-          style={styles.searchResults}
-          onPress={() => router.replace("/ponto-recarga")}
-        >
+        <View style={styles.searchResults}>
           <View style={styles.searchResultItem} id="searchResults">
-            <View style={styles.itemTitleContainer}>
+            <Pressable
+              style={styles.itemTitleContainer}
+              onPress={() => router.replace("/ponto-recarga")}
+            >
               <ThemedText>Flui(ndo)</ThemedText>
               <Text style={styles.sponsoredText}>Patrocinado</Text>
-            </View>
+            </Pressable>
           </View>
-        </Pressable>
+        </View>
       )}
     </View>
   );
