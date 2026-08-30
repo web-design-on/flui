@@ -15,7 +15,6 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
       "output": "static"
     },
     "plugins": [
@@ -30,7 +29,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
