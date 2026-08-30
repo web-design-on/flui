@@ -1,30 +1,27 @@
-import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import IconCard from '@/components/IconCard';
 import { FluiColors, FluiFonts, Spacing } from '@/constants/theme';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const icons = {
-  bateria: require('@/assets/images/icons/bateria.png'),
-  status: require('@/assets/images/icons/status.png'),
-  food: require('@/assets/images/icons/food.png'),
-  recarga: require('@/assets/images/icons/recarga.png'),
-  info: require('@/assets/images/icons/info.png'),
-  seusevs: require('@/assets/images/icons/seusevs.png'),
+  bateria: require('@/assets/icons/bateria.png'),
+  status: require('@/assets/icons/status.png'),
+  food: require('@/assets/icons/food.png'),
+  recarga: require('@/assets/icons/recarga.png'),
+  info: require('@/assets/icons/info.png'),
+  seusevs: require('@/assets/icons/seusevs.png'),
 };
 
-// Essas 2 cores ainda não existem no FluiColors — deixei aqui local
-// em vez de editar o theme.ts. Se quiserem, dá pra mover pra lá depois.
 const CARD_BG = '#f2f2f2';
 const DIVIDER_COLOR = 'rgba(255,255,255,0.15)';
 
 const H_PADDING = Spacing.md;
-const GRID_GAP = 14; // não bate com nenhum token exato do Spacing
+const GRID_GAP = 17;
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CONTENT_WIDTH = Math.min(SCREEN_WIDTH, 480);
-const CARD_SIZE = (CONTENT_WIDTH - H_PADDING * 2 - GRID_GAP * 2) / 3;
-
+const CARD_SIZE = ((CONTENT_WIDTH - H_PADDING * 2 - GRID_GAP * 2) / 3) * 0.88;
 type GridItem = {
   key: string;
   title: string;
@@ -78,10 +75,10 @@ const GRID_ROWS: GridItem[][] = [
 ];
 
 const newsItems = [
-  { title: 'Venda de carros elétricos aumenta no Brasil', image: require('@/assets/images/news/noticia_carro.png') },
-  { title: 'Novos pontos de recarga chegam a mais cidades', image: require('@/assets/images/news/noticia_recarga.png') },
-  { title: 'Baterias de longa duração chegam ao mercado', image: require('@/assets/images/news/noticia_bateria.png') },
-  { title: 'Incentivos fiscais impulsionam adoção de EVs', image: require('@/assets/images/news/noticia_incentivo.png') },
+  { title: 'Venda de carros elétricos aumenta no Brasil', image: require('@/assets/news/noticia_carro.png') },
+  { title: 'Novos pontos de recarga chegam a mais cidades', image: require('@/assets/news/noticia_recarga.png') },
+  { title: 'Baterias de longa duração chegam ao mercado', image: require('@/assets/news/noticia_bateria.png') },
+  { title: 'Incentivos fiscais impulsionam adoção de EVs', image: require('@/assets/news/noticia_incentivo.png') },
 ];
 
 export default function HomeScreen() {
@@ -146,21 +143,34 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: FluiColors.background },
   content: {
     paddingHorizontal: H_PADDING,
-    paddingTop: Spacing.lg,
+    paddingTop: Spacing.xl + Spacing.md,
     paddingBottom: Spacing.xl + Spacing.sm,
     width: '100%',
     maxWidth: 480,
     alignSelf: 'center',
   },
-  greeting: { color: FluiColors.text, fontSize: 17, fontFamily: FluiFonts.josefin.bold, textAlign: 'center', marginBottom: Spacing.sm },
+  greeting: {
+    color: FluiColors.text,
+    fontSize: 17,
+    fontFamily: FluiFonts.josefin.bold,
+    textAlign: 'center',
+    marginTop: 60,
+    marginBottom: Spacing.sm
+  },
   subtitleRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap' },
-  subtitle: { color: FluiColors.text, fontSize: 13, fontFamily: FluiFonts.josefin.regular },
+  subtitle: { color: FluiColors.text, fontSize: 17, fontFamily: FluiFonts.josefin.regular },
   subtitleBold: { fontFamily: FluiFonts.josefin.bold },
-  time: { color: FluiColors.mutedText, fontSize: 12, fontFamily: FluiFonts.josefin.regular, marginLeft: Spacing.sm },
+  time: { color: FluiColors.mutedText, fontSize: 15, fontFamily: FluiFonts.josefin.regular, marginLeft: Spacing.sm },
   divider: { height: 1, backgroundColor: DIVIDER_COLOR, marginTop: Spacing.sm, marginBottom: Spacing.lg },
-  gridRow: { flexDirection: 'row', gap: GRID_GAP, marginBottom: GRID_GAP },
-  sectionTitle: { color: FluiColors.text, fontSize: 15, fontFamily: FluiFonts.josefin.bold, marginTop: Spacing.sm },
-  newsCard: { backgroundColor: '#ffffff', borderRadius: 18, padding: Spacing.md, overflow: 'hidden', marginBottom: Spacing.md },
-  newsHeadline: { color: FluiColors.inputText, fontFamily: FluiFonts.josefin.bold, fontSize: 14, lineHeight: 19, marginBottom: Spacing.sm },
-  newsImage: { width: '100%', height: 110, borderRadius: 12 },
+  gridRow: { flexDirection: 'row', gap: GRID_GAP, marginBottom: GRID_GAP, marginLeft: 20 },
+  sectionTitle: { color: FluiColors.text, fontSize: 17, fontFamily: FluiFonts.josefin.bold, marginTop: Spacing.sm },
+  newsCard: {
+    backgroundColor: '#ffffff',
+    borderRadius: 18,
+    padding: 19,
+    overflow: 'hidden',
+    marginBottom: Spacing.md,
+    width: '100%',
+  }, newsHeadline: { color: FluiColors.inputText, fontFamily: FluiFonts.josefin.bold, fontSize: 16, lineHeight: 19, marginBottom: Spacing.sm },
+  newsImage: { width: '100%', height: 170, borderRadius: 12 },
 });
