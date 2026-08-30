@@ -1,12 +1,17 @@
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { Image } from 'expo-image';
-import { ComponentProps, ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { Image } from "expo-image";
+import { ComponentProps, ReactNode } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { BackButton } from '@/components/BackButton';
-import { BorderRadius, FluiColors, FluiFonts, Spacing } from '@/constants/theme';
-import { stationsMock } from '@/mocks/station';
+import { BackButton } from "@/components/BackButton";
+import {
+  BorderRadius,
+  FluiColors,
+  FluiFonts,
+  Spacing,
+} from "@/constants/theme";
+import { stationsMock } from "@/mocks/station";
 
 const station = stationsMock[0];
 
@@ -15,7 +20,10 @@ export default function PontoRecargaScreen() {
 
   return (
     <View style={styles.root}>
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.headerImage}>
           <Image
             accessibilityLabel="Foto do ponto de recarga"
@@ -26,7 +34,10 @@ export default function PontoRecargaScreen() {
           <BackButton />
           <View style={[styles.dotsRow, { top: insets.top + Spacing.md }]}>
             {[0, 1, 2].map((index) => (
-              <View key={index} style={[styles.dot, index === 0 && styles.dotActive]} />
+              <View
+                key={index}
+                style={[styles.dot, index === 0 && styles.dotActive]}
+              />
             ))}
           </View>
         </View>
@@ -40,13 +51,19 @@ export default function PontoRecargaScreen() {
         <View style={styles.body}>
           <Text style={styles.title}>{station.title}</Text>
           <View style={styles.locationRow}>
-            <MaterialIcons color={FluiColors.mutedText} name="location-on" size={14} />
+            <MaterialIcons
+              color={FluiColors.mutedText}
+              name="location-on"
+              size={14}
+            />
             <Text style={styles.locationText}>{station.location}</Text>
           </View>
 
           <View style={styles.metaRow}>
             <View style={styles.openDot} />
-            <Text style={styles.metaText}>{station.isOpen ? 'Aberto' : 'Fechado'}</Text>
+            <Text style={styles.metaText}>
+              {station.isOpen ? "Aberto" : "Fechado"}
+            </Text>
             <Text style={styles.metaSeparator}>•</Text>
             <Text style={styles.metaText}>Fecha {station.closesAt}</Text>
           </View>
@@ -56,7 +73,11 @@ export default function PontoRecargaScreen() {
             <Text style={styles.ratingText}>
               {station.rating} ({station.reviewsCount} avaliações)
             </Text>
-            <MaterialIcons color={FluiColors.mutedText} name="chevron-right" size={18} />
+            <MaterialIcons
+              color={FluiColors.mutedText}
+              name="chevron-right"
+              size={18}
+            />
           </Pressable>
 
           <View style={styles.actionsRow}>
@@ -69,12 +90,15 @@ export default function PontoRecargaScreen() {
             <Text style={styles.infoHeading}>Informações gerais</Text>
 
             <Text style={styles.infoLabel}>
-              Quantidade de carregadores: <Text style={styles.infoValue}>{station.chargersCount}</Text>
+              Quantidade de carregadores:{" "}
+              <Text style={styles.infoValue}>{station.chargersCount}</Text>
             </Text>
 
             <InfoSection title="Tipos de carregador:">
               <InfoList
-                items={station.connectorTypes.map(({ type, count }) => `${type} (${count})`)}
+                items={station.connectorTypes.map(
+                  ({ type, count }) => `${type} (${count})`,
+                )}
               />
             </InfoSection>
 
@@ -95,7 +119,9 @@ export default function PontoRecargaScreen() {
           <UpdateCard />
           <UpdateCard />
           <Pressable style={styles.secondaryButton}>
-            <Text style={styles.secondaryButtonLabel}>Ver mais atualizações de {station.name}</Text>
+            <Text style={styles.secondaryButtonLabel}>
+              Ver mais atualizações de {station.name}
+            </Text>
           </Pressable>
 
           <View style={styles.divider} />
@@ -109,26 +135,25 @@ export default function PontoRecargaScreen() {
           </View>
 
           <View style={styles.photoGrid}>
-            {[[0, 1], [2, 3]].map((row) => (
-              <View key={row.join('-')} style={styles.photoRow}>
+            {[
+              [0, 1],
+              [2, 3],
+            ].map((row) => (
+              <View key={row.join("-")} style={styles.photoRow}>
                 {row.map((index) => (
                   <View key={index} style={styles.photoTile}>
-                    <MaterialIcons color={FluiColors.primaryDark} name="add-a-photo" size={22} />
+                    <MaterialIcons
+                      color={FluiColors.primaryDark}
+                      name="add-a-photo"
+                      size={22}
+                    />
                   </View>
                 ))}
               </View>
             ))}
           </View>
         </View>
-
-        <View style={{ height: 72 + insets.bottom }} />
       </ScrollView>
-
-      <View style={[styles.bottomBar, { paddingBottom: insets.bottom || Spacing.sm }]}>
-        <BottomBarItem icon="home" label="Home" />
-        <BottomBarItem icon="search" label="Busca" />
-        <BottomBarItem icon="person" label="Perfil" />
-      </View>
     </View>
   );
 }
@@ -137,7 +162,7 @@ function ActionButton({
   icon,
   label,
 }: {
-  icon: ComponentProps<typeof MaterialIcons>['name'];
+  icon: ComponentProps<typeof MaterialIcons>["name"];
   label: string;
 }) {
   return (
@@ -181,43 +206,40 @@ function InfoList({ items }: { items: string[] }) {
 function UpdateCard() {
   return (
     <View style={styles.updateCard}>
-      <MaterialIcons color={FluiColors.primaryDark} name="add-a-photo" size={28} />
+      <MaterialIcons
+        color={FluiColors.primaryDark}
+        name="add-a-photo"
+        size={28}
+      />
       <View style={styles.updateCardActions}>
         <Pressable style={styles.updateCardIconButton}>
-          <MaterialIcons color={FluiColors.primaryDark} name="volume-up" size={16} />
+          <MaterialIcons
+            color={FluiColors.primaryDark}
+            name="volume-up"
+            size={16}
+          />
         </Pressable>
         <Pressable style={styles.updateCardIconButton}>
-          <MaterialIcons color={FluiColors.primaryDark} name="share" size={16} />
+          <MaterialIcons
+            color={FluiColors.primaryDark}
+            name="share"
+            size={16}
+          />
         </Pressable>
       </View>
     </View>
   );
 }
 
-function BottomBarItem({
-  icon,
-  label,
-}: {
-  icon: ComponentProps<typeof MaterialIcons>['name'];
-  label: string;
-}) {
-  return (
-    <View style={styles.bottomBarItem}>
-      <MaterialIcons color={FluiColors.mutedText} name={icon} size={24} />
-      <Text style={styles.bottomBarLabel}>{label}</Text>
-    </View>
-  );
-}
-
 const styles = StyleSheet.create({
   actionButton: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.primaryDark,
     borderRadius: BorderRadius.button,
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 6,
-    justifyContent: 'center',
+    justifyContent: "center",
     paddingVertical: 10,
   },
   actionButtonLabel: {
@@ -226,15 +248,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   actionsRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: Spacing.sm,
     marginTop: Spacing.md,
   },
   addPhotoLink: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.primaryDark,
     borderRadius: BorderRadius.button,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 4,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 6,
@@ -247,27 +269,6 @@ const styles = StyleSheet.create({
   body: {
     paddingHorizontal: 24,
   },
-  bottomBar: {
-    backgroundColor: FluiColors.background,
-    borderTopColor: 'rgba(255,255,255,0.1)',
-    borderTopWidth: 1,
-    bottom: 0,
-    flexDirection: 'row',
-    left: 0,
-    paddingTop: Spacing.sm,
-    position: 'absolute',
-    right: 0,
-  },
-  bottomBarItem: {
-    alignItems: 'center',
-    flex: 1,
-    gap: 2,
-  },
-  bottomBarLabel: {
-    color: FluiColors.mutedText,
-    fontFamily: FluiFonts.inter.regular,
-    fontSize: 11,
-  },
   bullet: {
     backgroundColor: FluiColors.mutedText,
     borderRadius: 2,
@@ -276,12 +277,12 @@ const styles = StyleSheet.create({
     width: 4,
   },
   divider: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: "rgba(255,255,255,0.1)",
     height: 1,
     marginVertical: Spacing.lg,
   },
   dot: {
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: "rgba(255,255,255,0.5)",
     borderRadius: 3,
     height: 6,
     width: 6,
@@ -290,18 +291,18 @@ const styles = StyleSheet.create({
     backgroundColor: FluiColors.text,
   },
   dotsRow: {
-    alignSelf: 'center',
-    flexDirection: 'row',
+    alignSelf: "center",
+    flexDirection: "row",
     gap: 6,
-    position: 'absolute',
+    position: "absolute",
   },
   headerImage: {
     height: 220,
-    width: '100%',
+    width: "100%",
   },
   headerPhoto: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
   },
   infoCard: {
     backgroundColor: FluiColors.card,
@@ -333,7 +334,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   listItem: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
   },
   listText: {
@@ -344,8 +345,8 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   locationRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     gap: 4,
     marginTop: 2,
   },
@@ -355,8 +356,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   metaRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     gap: 6,
     marginTop: Spacing.sm,
   },
@@ -380,20 +381,20 @@ const styles = StyleSheet.create({
     marginTop: Spacing.sm,
   },
   photoRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: Spacing.sm,
   },
   photoTile: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.placeholder,
     borderRadius: 10,
     flex: 1,
     height: 110,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   ratingRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     gap: 6,
     marginTop: Spacing.sm,
   },
@@ -412,7 +413,7 @@ const styles = StyleSheet.create({
     paddingBottom: Spacing.lg,
   },
   secondaryButton: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.primary,
     borderRadius: BorderRadius.button,
     marginTop: Spacing.sm,
@@ -424,9 +425,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   sectionHeaderRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   sectionHeading: {
     color: FluiColors.text,
@@ -441,12 +442,12 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   statusBadgeText: {
-    color: '#123b23',
+    color: "#123b23",
     fontFamily: FluiFonts.inter.semiBold,
     fontSize: 11,
   },
   statusBadgeWrap: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: -14,
     zIndex: 2,
   },
@@ -457,29 +458,29 @@ const styles = StyleSheet.create({
     marginTop: Spacing.md,
   },
   updateCard: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.placeholder,
     borderRadius: 12,
     height: 140,
-    justifyContent: 'center',
+    justifyContent: "center",
     marginBottom: Spacing.sm,
-    width: '100%',
+    width: "100%",
   },
   updateCardActions: {
     bottom: Spacing.sm,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: Spacing.sm,
-    position: 'absolute',
+    position: "absolute",
     right: Spacing.sm,
   },
   updateCardIconButton: {
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: FluiColors.text,
     borderColor: FluiColors.primaryDark,
     borderRadius: 14,
     borderWidth: 1,
     height: 28,
-    justifyContent: 'center',
+    justifyContent: "center",
     width: 28,
   },
 });
