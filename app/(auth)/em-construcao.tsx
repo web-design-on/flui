@@ -4,24 +4,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { FluiColors, FluiFonts, Spacing, BorderRadius } from '@/constants/theme';
 
-export default function EmConstrucaoScreen() {
-    const { title } = useLocalSearchParams<{ title?: string }>();
+    export default function EmConstrucaoScreen() {
+        const { title } = useLocalSearchParams<{ title?: string }>();
 
-    return (
-        <View style={styles.container}>
-            <View style={styles.iconCircle}>
-                <Ionicons name="construct" size={48} color={FluiColors.inputText} />
-            </View>
-            <Text style={styles.title}>{title ?? 'Essa área'}</Text>
-            <Text style={styles.subtitle}>Essa tela ainda está em construção 🚧{'\n'}Volte em breve!</Text>
-            {router.canGoBack() && (
-                <TouchableOpacity style={styles.button} onPress={() => router.back()}>
+        return (
+            <View style={styles.container}>
+                <View style={styles.iconCircle}>
+                    <Ionicons name="construct" size={48} color={FluiColors.inputText} />
+                </View>
+                <Text style={styles.title}>{title ?? 'Essa área'}</Text>
+                <Text style={styles.subtitle}>Essa tela ainda está em construção 🚧{'\n'}Volte em breve!</Text>
+                <TouchableOpacity style={styles.button} onPress={() => router.replace('/home')}>
                     <Text style={styles.buttonText}>Voltar</Text>
                 </TouchableOpacity>
-            )}
-        </View>
-    );
-}
+            </View>
+        );
+    }
 
 const CARD_BG = '#f2f2f2';
 
