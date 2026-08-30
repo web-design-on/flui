@@ -140,7 +140,10 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: FluiColors.background },
+  container: {
+    flex: 1,
+    backgroundColor: FluiColors.background,
+  },
   content: {
     paddingHorizontal: H_PADDING,
     paddingTop: Spacing.xl + Spacing.md,
@@ -155,15 +158,46 @@ const styles = StyleSheet.create({
     fontFamily: FluiFonts.josefin.bold,
     textAlign: 'center',
     marginTop: 60,
-    marginBottom: Spacing.sm
+    marginBottom: Spacing.sm,
   },
-  subtitleRow: { flexDirection: 'row', justifyContent: 'center', alignItems: 'baseline', flexWrap: 'wrap' },
-  subtitle: { color: FluiColors.text, fontSize: 17, fontFamily: FluiFonts.josefin.regular },
-  subtitleBold: { fontFamily: FluiFonts.josefin.bold },
-  time: { color: FluiColors.mutedText, fontSize: 15, fontFamily: FluiFonts.josefin.regular, marginLeft: Spacing.sm },
-  divider: { height: 1, backgroundColor: DIVIDER_COLOR, marginTop: Spacing.sm, marginBottom: Spacing.lg },
-  gridRow: { flexDirection: 'row', gap: GRID_GAP, marginBottom: GRID_GAP, marginLeft: 20 },
-  sectionTitle: { color: FluiColors.text, fontSize: 17, fontFamily: FluiFonts.josefin.bold, marginTop: Spacing.sm },
+  subtitleRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'baseline',
+    flexWrap: 'wrap',
+  },
+  subtitle: {
+    color: FluiColors.text,
+    fontSize: 17,
+    fontFamily: FluiFonts.josefin.regular,
+  },
+  subtitleBold: {
+    fontFamily: FluiFonts.josefin.bold,
+  },
+  time: {
+    color: FluiColors.mutedText,
+    fontSize: 15,
+    fontFamily: FluiFonts.josefin.regular,
+    marginLeft: Spacing.sm,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: DIVIDER_COLOR,
+    marginTop: Spacing.sm,
+    marginBottom: Spacing.lg,
+  },
+  gridRow: {
+    flexDirection: 'row',
+    gap: GRID_GAP,
+    marginBottom: GRID_GAP,
+    marginLeft: 20,
+  },
+  sectionTitle: {
+    color: FluiColors.text,
+    fontSize: 17,
+    fontFamily: FluiFonts.josefin.bold,
+    marginTop: Spacing.sm,
+  },
   newsCard: {
     backgroundColor: '#ffffff',
     borderRadius: 18,
@@ -171,6 +205,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: Spacing.md,
     width: '100%',
-  }, newsHeadline: { color: FluiColors.inputText, fontFamily: FluiFonts.josefin.bold, fontSize: 16, lineHeight: 19, marginBottom: Spacing.sm },
-  newsImage: { width: '100%', height: 170, borderRadius: 12 },
+  },
+  newsHeadline: {
+    color: FluiColors.inputText,
+    fontFamily: FluiFonts.josefin.bold,
+    fontSize: 16,
+    lineHeight: 19,
+    marginBottom: Spacing.sm,
+  },
+  newsImage: {
+    width: '100%',
+    height: 170,
+    borderRadius: 12,
+  },
 });
