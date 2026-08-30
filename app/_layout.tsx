@@ -1,24 +1,13 @@
-import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-} from "@expo-google-fonts/inter";
-import {
-  JosefinSans_400Regular,
-  JosefinSans_700Bold,
-} from "@expo-google-fonts/josefin-sans";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { StatusBar } from "expo-status-bar";
-import { useEffect } from "react";
-import "react-native-reanimated";
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
+import { JosefinSans_400Regular, JosefinSans_700Bold } from '@expo-google-fonts/josefin-sans';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import 'react-native-reanimated';
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
@@ -37,6 +26,7 @@ export default function RootLayout() {
     Inter_700Bold,
     JosefinSans_400Regular,
     JosefinSans_700Bold,
+    ...MaterialIcons.font,
   });
 
   useEffect(() => {
