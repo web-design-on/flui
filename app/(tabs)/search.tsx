@@ -1,8 +1,16 @@
+import RechargePoint from "@/components/recharge-point";
 import { ThemedText } from "@/components/themed-text";
-import { FluiColors } from "@/constants/theme";
-import { router, useFocusEffect } from "expo-router";
+import { BorderRadius, FluiColors, Spacing } from "@/constants/theme";
+import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { Keyboard, Pressable, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from "react-native";
 
 export default function SearchScreen() {
   const [showResults, setShowResults] = useState(false);
@@ -31,18 +39,11 @@ export default function SearchScreen() {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 16,
-        }}
-      >
+      <View style={styles.searchContainer}>
         <TextInput
           placeholder="Pesquise aqui..."
           style={styles.searchInput}
-          placeholderTextColor="#FFFFFF"
+          placeholderTextColor={FluiColors.text}
           onSubmitEditing={handleSearch}
           value={searchInput}
           onChangeText={setSearchInput}
@@ -54,67 +55,64 @@ export default function SearchScreen() {
       </View>
 
       {showResults && (
-        <View style={styles.searchResults}>
-          <View style={styles.searchResultItem} id="searchResults">
-            <Pressable
-              style={styles.itemTitleContainer}
-              onPress={() => router.replace("/ponto-recarga")}
-            >
-              <ThemedText>Flui(ndo)</ThemedText>
-              <Text style={styles.sponsoredText}>Patrocinado</Text>
-            </Pressable>
-          </View>
-        </View>
+        <ScrollView style={styles.searchResults}>
+          <RechargePoint
+            name="Flui(ndo)"
+            rating={4.9}
+            duration="12min"
+            chargerTypes={["CCS (2)", "CA (1)"]}
+            sponsored
+          />
+
+          <RechargePoint
+            name="Volt Express Moema"
+            rating={5}
+            duration="10min"
+            chargerTypes={["CCS (2)", "CA (1), CCS (4)"]}
+          />
+
+          <RechargePoint
+            name="Estação ABC"
+            rating={4.0}
+            duration="15min"
+            chargerTypes={["CCS (4)"]}
+            sponsored={false}
+            closed
+          />
+        </ScrollView>
       )}
     </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
-    marginTop: 32,
-    paddingHorizontal: 16,
+    marginTop: 40,
+    paddingHorizontal: Spacing.md,
     flex: 1,
   },
-  searchInput: {
-    backgroundColor: "#505050",
-    borderRadius: 32,
-    color: "#fff",
-    fontSize: 16,
-    paddingHorizontal: 17,
-    paddingVertical: 8,
-    flex: 1,
-  },
-  searchResults: {
-    backgroundColor: "#505050",
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: 16,
-    marginTop: 200,
-    width: "100%",
-    flex: 1,
-  },
-  searchResultItem: {
-    backgroundColor: "#333130",
-    borderRadius: 8,
-    padding: 8,
-  },
-  itemTitleContainer: {
+  searchContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    gap: 16,
+    gap: Spacing.md,
   },
-  sponsoredText: {
-    fontSize: 10,
-    color: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: FluiColors.primary,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 32,
+  searchInput: {
+    backgroundColor: FluiColors.inputText,
+    borderRadius: BorderRadius.button,
+    color: FluiColors.text,
+    fontSize: Spacing.md,
+    paddingHorizontal: Spacing.md + 1,
+    paddingVertical: Spacing.sm + 4,
+    flex: 1,
   },
-  cancelText: {
-    fontSize: 12,
+  searchResults: {
+    backgroundColor: FluiColors.inputText,
+    borderTopLeftRadius: Spacing.md,
+    borderTopRightRadius: Spacing.md,
+    marginTop: 200,
+    width: "100%",
+    flex: 1,
+    gap: 8,
   },
-};
+});
