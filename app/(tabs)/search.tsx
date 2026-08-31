@@ -1,14 +1,13 @@
+import RechargePoint from "@/components/recharge-point";
 import { ThemedText } from "@/components/themed-text";
 import { BorderRadius, FluiColors, Spacing } from "@/constants/theme";
-import { MaterialIcons } from "@expo/vector-icons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { router, useFocusEffect } from "expo-router";
+import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
 import {
   Keyboard,
   Pressable,
+  ScrollView,
   StyleSheet,
-  Text,
   TextInput,
   View,
 } from "react-native";
@@ -56,43 +55,31 @@ export default function SearchScreen() {
       </View>
 
       {showResults && (
-        <View style={styles.searchResults}>
-          <Pressable
-            onPress={() => router.replace("/ponto-recarga")}
-            style={styles.searchResultItem}
-          >
-            <View style={styles.itemTitleContainer}>
-              <ThemedText>Flui(ndo)</ThemedText>
-              <Text style={styles.sponsoredText}>Patrocinado</Text>
-            </View>
+        <ScrollView style={styles.searchResults}>
+          <RechargePoint
+            name="Flui(ndo)"
+            rating={4.9}
+            duration="12min"
+            chargerTypes={["CCS (2)", "CA (1)"]}
+            sponsored
+          />
 
-            <View style={styles.resultInfo}>
-              <ThemedText>
-                <MaterialIcons
-                  color={FluiColors.mutedText}
-                  name="star"
-                  size={14}
-                />
-                4,9
-              </ThemedText>
+          <RechargePoint
+            name="Volt Express Moema"
+            rating={5}
+            duration="10min"
+            chargerTypes={["CCS (2)", "CA (1), CCS (4)"]}
+          />
 
-              <ThemedText> - </ThemedText>
-
-              <ThemedText>
-                <MaterialCommunityIcons name="car" /> 12min
-              </ThemedText>
-            </View>
-
-            <ThemedText style={styles.chargerTitle}>
-              Tipos de carregador disponíveis:
-            </ThemedText>
-
-            <View style={styles.chargerTypes}>
-              <Text style={styles.chargerType}>CCS (2)</Text>
-              <Text style={styles.chargerType}>CA (1)</Text>
-            </View>
-          </Pressable>
-        </View>
+          <RechargePoint
+            name="Estação ABC"
+            rating={4.0}
+            duration="15min"
+            chargerTypes={["CCS (4)"]}
+            sponsored={false}
+            closed
+          />
+        </ScrollView>
       )}
     </View>
   );
@@ -100,7 +87,7 @@ export default function SearchScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Spacing.xl,
+    marginTop: 40,
     paddingHorizontal: Spacing.md,
     flex: 1,
   },
@@ -116,63 +103,16 @@ const styles = StyleSheet.create({
     color: FluiColors.text,
     fontSize: Spacing.md,
     paddingHorizontal: Spacing.md + 1,
-    paddingVertical: Spacing.sm,
+    paddingVertical: Spacing.sm + 4,
     flex: 1,
   },
   searchResults: {
     backgroundColor: FluiColors.inputText,
     borderTopLeftRadius: Spacing.md,
     borderTopRightRadius: Spacing.md,
-    padding: Spacing.md,
     marginTop: 200,
     width: "100%",
     flex: 1,
-  },
-  searchResultItem: {
-    backgroundColor: FluiColors.card,
-    borderRadius: BorderRadius.input,
-    padding: Spacing.sm,
-  },
-  itemTitleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: Spacing.md,
-  },
-  sponsoredText: {
-    fontSize: 10,
-    color: FluiColors.text,
-    borderWidth: 1,
-    borderColor: FluiColors.primary,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.button,
-  },
-  cancelText: {
-    fontSize: 12,
-  },
-  resultInfo: {
-    flexDirection: "row",
-    gap: Spacing.xs,
-  },
-  chargerTitle: {
-    borderTopWidth: 1,
-    borderColor: FluiColors.text,
-    paddingTop: Spacing.sm,
-    marginTop: Spacing.sm,
-  },
-  chargerTypes: {
-    flexDirection: "row",
-    gap: Spacing.sm,
-    marginTop: Spacing.sm,
-  },
-  chargerType: {
-    fontSize: 12,
-    color: FluiColors.text,
-    borderWidth: 1,
-    borderColor: FluiColors.text,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.button,
+    gap: 8,
   },
 });
