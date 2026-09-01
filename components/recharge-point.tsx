@@ -4,22 +4,42 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
+type Amenity = "cafe" | "wifi";
+
 interface RechargePointProps {
   name: string;
   rating: number;
+  distance: string;
   duration: string;
-  chargerTypes: string[];
+  price: string;
+  vagasDisponiveis: number;
+  vagasTotal: number;
+  amenities?: Amenity[];
   sponsored?: boolean;
-  onPress?: () => void;
+  livre?: boolean;
   closed?: boolean;
+  onPress?: () => void;
 }
+
+const AMENITY_META: Record<
+  Amenity,
+  { icon: keyof typeof MaterialCommunityIcons.glyphMap; label: string }
+> = {
+  cafe: { icon: "coffee", label: "café" },
+  wifi: { icon: "wifi", label: "wi-fi" },
+};
 
 export default function RechargePoint({
   name,
   rating,
+  distance,
   duration,
-  chargerTypes,
+  price,
+  vagasDisponiveis,
+  vagasTotal,
+  amenities = [],
   sponsored = false,
+  livre = false,
   closed = false,
   onPress,
 }: RechargePointProps) {
@@ -28,101 +48,145 @@ export default function RechargePoint({
       onPress();
       return;
     }
-
-    router.replace("/ponto-recarga");
+    router.push("/ponto-recarga");
   }
+
+  const borderColor = closed
+    ? FluiColors.markerClosed
+    : sponsored
+      ? FluiColors.markerSponsored
+      : FluiColors.markerLivre;
 
   return (
     <Pressable
       onPress={handlePress}
-      style={[
-        styles.searchResultItem,
-        {
-          borderLeftColor: closed ? "#FF5353" : "lightgreen",
-        },
-      ]}
+      style={[styles.card, { borderLeftColor: borderColor }]}
     >
-      <View style={styles.itemTitleContainer}>
-        <ThemedText>
-          {name} {closed && " (Fechado)"}
-        </ThemedText>
+      <View style={styles.headerRow}>
+        <View style={{ flex: 1 }}>
+          <ThemedText style={styles.name}>
+            {name}
+            {closed ? " (Fechado)" : ""}
+          </ThemedText>
+          <ThemedText style={styles.subInfo}>
+            {distance} - {duration}
+          </ThemedText>
+        </View>
 
-        {sponsored && <Text style={styles.sponsoredText}>Patrocinado</Text>}
+        {sponsored && (
+          <View
+            style={[styles.badge, { backgroundColor: FluiColors.sponsoredBg }]}
+          >
+            <Text
+              style={[styles.badgeText, { color: FluiColors.sponsoredText }]}
+            >
+              Patrocinado
+            </Text>
+          </View>
+        )}
+        {!sponsored && livre && !closed && (
+          <View style={[styles.badge, { backgroundColor: FluiColors.livreBg }]}>
+            <Text style={[styles.badgeText, { color: FluiColors.livreText }]}>
+              Livre
+            </Text>
+          </View>
+        )}
       </View>
-      <View style={styles.resultInfo}>
-        <ThemedText>
-          <MaterialIcons color={FluiColors.mutedText} name="star" size={14} />{" "}
-          {rating}
-        </ThemedText>
 
-        <ThemedText> - </ThemedText>
-
-        <ThemedText>
-          <MaterialCommunityIcons name="car" size={14} /> {duration}
+      <View style={styles.statsRow}>
+        <MaterialIcons name="star" size={14} color={FluiColors.star} />
+        <ThemedText style={styles.statsText}> {rating.toFixed(1)}</ThemedText>
+        <ThemedText style={styles.statsText}>
+          {"   "}
+          {vagasDisponiveis}/{vagasTotal} vagas
         </ThemedText>
       </View>
-      <ThemedText style={styles.chargerTitle}>
-        Tipos de carregador disponíveis:
+
+      {amenities.length > 0 && (
+        <View style={styles.amenitiesRow}>
+          {amenities.map((a) => (
+            <View key={a} style={styles.amenityPill}>
+              <MaterialCommunityIcons
+                name={AMENITY_META[a].icon}
+                size={12}
+                color={FluiColors.mutedText}
+              />
+              <Text style={styles.amenityText}>{AMENITY_META[a].label}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+
+      <ThemedText style={styles.priceLine}>
+        {price} ~ {duration}
       </ThemedText>
-      <View style={styles.chargerTypes}>
-        {chargerTypes.map((type) => (
-          <Text key={type} style={styles.chargerType}>
-            {type}
-          </Text>
-        ))}
-      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  searchResultItem: {
+  card: {
     backgroundColor: FluiColors.card,
-    borderTopRightRadius: BorderRadius.button,
-    borderBottomRightRadius: BorderRadius.button,
-    padding: Spacing.md,
-    marginHorizontal: 16,
-    marginTop: 16,
+    borderTopRightRadius: BorderRadius.card,
+    borderBottomRightRadius: BorderRadius.card,
+    padding: Spacing.md - 2,
+    marginTop: Spacing.md - 4,
     borderLeftWidth: 4,
   },
-  itemTitleContainer: {
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: Spacing.sm,
+  },
+  name: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  subInfo: {
+    fontSize: 12,
+    color: FluiColors.mutedText,
+    marginTop: 2,
+  },
+  badge: {
+    borderRadius: 10,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: "500",
+  },
+  statsRow: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
-    gap: Spacing.md,
-  },
-  sponsoredText: {
-    fontSize: 10,
-    color: FluiColors.text,
-    borderWidth: 1,
-    borderColor: FluiColors.primary,
-    paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.button,
-  },
-  resultInfo: {
-    flexDirection: "row",
-    gap: Spacing.xs,
-  },
-  chargerTitle: {
-    borderTopWidth: 1,
-    borderColor: FluiColors.text,
-    paddingTop: Spacing.sm,
     marginTop: Spacing.sm,
-    fontSize: 14,
   },
-  chargerTypes: {
+  statsText: {
+    fontSize: 13,
+    fontWeight: "500",
+  },
+  amenitiesRow: {
     flexDirection: "row",
     gap: Spacing.sm,
     marginTop: Spacing.sm,
   },
-  chargerType: {
-    fontSize: 12,
-    color: FluiColors.text,
-    borderWidth: 1,
-    borderColor: FluiColors.text,
+  amenityPill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    backgroundColor: FluiColors.chipInactive,
+    borderRadius: 12,
     paddingHorizontal: Spacing.sm,
-    paddingVertical: Spacing.xs,
-    borderRadius: BorderRadius.button,
+    paddingVertical: 4,
+  },
+  amenityText: {
+    fontSize: 11,
+    color: FluiColors.mutedText,
+  },
+  priceLine: {
+    fontSize: 16,
+    fontWeight: "500",
+    marginTop: Spacing.sm,
   },
 });
