@@ -46,7 +46,7 @@ const MOCK_RESULTS = [
     price: "R$ 18,40",
     vagasDisponiveis: 3,
     vagasTotal: 4,
-    amenities: ["cafe", "wifi"] as const,
+    amenities: ["CCS (2)", "CA"] as const,
     sponsored: true,
     livre: true,
   },
@@ -61,7 +61,7 @@ const MOCK_RESULTS = [
     price: "R$ 19,60",
     vagasDisponiveis: 5,
     vagasTotal: 6,
-    amenities: ["cafe", "wifi"] as const,
+    amenities: ["CCS (2)", "CA"] as const,
     sponsored: false,
     livre: true,
   },
@@ -122,31 +122,6 @@ export default function SearchScreen() {
         ))}
       </MapView>
 
-      <View style={styles.overlay}>
-        <Pressable style={styles.backButton} onPress={handleBack}>
-          <MaterialIcons
-            color={FluiColors.primary}
-            name="arrow-back"
-            size={22}
-          />
-        </Pressable>
-
-        <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Buscar Pontos..."
-            style={styles.searchInput}
-            placeholderTextColor={FluiColors.mutedText}
-            onSubmitEditing={handleSearch}
-            value={searchInput}
-            onChangeText={setSearchInput}
-            returnKeyType="search"
-          />
-          <Pressable onPress={handleSearch} style={styles.searchIconButton}>
-            <Ionicons name="search" size={20} color={FluiColors.mutedText} />
-          </Pressable>
-        </View>
-      </View>
-
       {showResults && (
         <View style={styles.resultsPanel}>
           <View style={styles.resultsHeaderRow}>
@@ -205,6 +180,31 @@ export default function SearchScreen() {
           </ScrollView>
         </View>
       )}
+
+      <View style={styles.overlay}>
+        <Pressable style={styles.backButton} onPress={handleBack}>
+          <MaterialIcons
+            color={FluiColors.primary}
+            name="arrow-back"
+            size={22}
+          />
+        </Pressable>
+
+        <View style={styles.searchContainer}>
+          <TextInput
+            placeholder="Buscar Pontos..."
+            style={styles.searchInput}
+            placeholderTextColor={FluiColors.mutedText}
+            onSubmitEditing={handleSearch}
+            value={searchInput}
+            onChangeText={setSearchInput}
+            returnKeyType="search"
+          />
+          <Pressable onPress={handleSearch} style={styles.searchIconButton}>
+            <Ionicons name="search" size={20} color={FluiColors.mutedText} />
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }
@@ -253,14 +253,12 @@ const styles = StyleSheet.create({
   },
   resultsPanel: {
     position: "absolute",
-    top: 110,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     backgroundColor: FluiColors.background,
-    borderTopLeftRadius: Spacing.lg ?? 20,
-    borderTopRightRadius: Spacing.lg ?? 20,
-    paddingTop: Spacing.md,
+    paddingTop: 110,
   },
   resultsHeaderRow: {
     flexDirection: "row",
@@ -312,5 +310,6 @@ const styles = StyleSheet.create({
   },
   searchResults: {
     marginTop: Spacing.md,
+    paddingHorizontal: Spacing.md,
   },
 });

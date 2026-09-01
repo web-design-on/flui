@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
-type Amenity = "cafe" | "wifi";
+type Amenity = "CCS (2)" | "CA";
 
 interface RechargePointProps {
   name: string;
@@ -25,8 +25,8 @@ const AMENITY_META: Record<
   Amenity,
   { icon: keyof typeof MaterialCommunityIcons.glyphMap; label: string }
 > = {
-  cafe: { icon: "coffee", label: "café" },
-  wifi: { icon: "wifi", label: "wi-fi" },
+  "CCS (2)": { icon: "ev-station", label: "CCS (2)" },
+  CA: { icon: "power-plug", label: "CA" },
 };
 
 export default function RechargePoint({
@@ -106,11 +106,6 @@ export default function RechargePoint({
         <View style={styles.amenitiesRow}>
           {amenities.map((a) => (
             <View key={a} style={styles.amenityPill}>
-              <MaterialCommunityIcons
-                name={AMENITY_META[a].icon}
-                size={12}
-                color={FluiColors.mutedText}
-              />
               <Text style={styles.amenityText}>{AMENITY_META[a].label}</Text>
             </View>
           ))}
@@ -140,8 +135,8 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
   },
   name: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 16,
+    fontWeight: "600",
   },
   subInfo: {
     fontSize: 12,
@@ -186,7 +181,7 @@ const styles = StyleSheet.create({
   },
   priceLine: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "600",
     marginTop: Spacing.sm,
   },
 });
