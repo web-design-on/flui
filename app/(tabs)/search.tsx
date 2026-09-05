@@ -97,7 +97,7 @@ export default function SearchScreen() {
   return (
     <View style={styles.container}>
       <MapView
-        style={StyleSheet.absoluteFillObject}
+        style={StyleSheet.absoluteFill}
         provider={Platform.OS === "android" ? PROVIDER_GOOGLE : undefined}
         customMapStyle={DARK_MAP_STYLE}
         initialRegion={{
