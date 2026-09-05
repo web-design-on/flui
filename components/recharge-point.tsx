@@ -174,6 +174,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 4,
+    borderWidth: 1,
+    borderColor: FluiColors.mutedText,
   },
   amenityText: {
     fontSize: 11,

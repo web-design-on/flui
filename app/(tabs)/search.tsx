@@ -269,6 +269,7 @@ const styles = StyleSheet.create({
   resultsTitle: {
     fontSize: 20,
     fontWeight: "700",
+    color: "#fff",
   },
   filterButton: {
     flexDirection: "row",
